@@ -9,16 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AttendIt">
-        <activity android:name=".activities.ClassCalendarActivity"></activity>
-        <activity android:name=".activities.ClassListActivity" >
+        <activity android:name=".activities.ClassDetailActivity"></activity>
+
+        <activity android:name=".activities.ClassListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AddClassActivity"/>
-
+        <activity android:name=".activities.AddClassActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

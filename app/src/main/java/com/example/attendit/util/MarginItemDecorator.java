@@ -6,11 +6,11 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-class MarginItemDecoration extends RecyclerView.ItemDecoration {
+public class MarginItemDecorator extends RecyclerView.ItemDecoration {
 
     private int spacing;
 
-    public MarginItemDecoration(int spacing) {
+    public MarginItemDecorator(int spacing) {
         this.spacing = spacing;
     }
 
@@ -22,10 +22,13 @@ class MarginItemDecoration extends RecyclerView.ItemDecoration {
         {
             outRect.top=spacing;
             outRect.bottom=spacing;
+            outRect.left=spacing;
+            outRect.right=spacing;
         }
         else {
             outRect.top=spacing;
-
+            outRect.left=spacing;
+            outRect.right=spacing;
         }
     }
 }

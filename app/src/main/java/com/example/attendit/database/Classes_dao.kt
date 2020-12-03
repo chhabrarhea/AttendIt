@@ -2,6 +2,7 @@ package com.example.attendit.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.attendit.util.Student
 
 @Dao
 interface classes_dao {
@@ -17,4 +18,6 @@ interface classes_dao {
     suspend fun deleteAllClasses()
     @Query("UPDATE list_of_classes SET classes_taken = classes_taken + 1 WHERE class_id = :id")
     suspend fun incrementClassesTaken(id:Int)
+    @Query("Select listOfStudents from list_of_classes where class_id=:id")
+    fun getStudents(id: Int):LiveData<ArrayList<Student>>
 }

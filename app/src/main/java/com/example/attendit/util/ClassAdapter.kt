@@ -14,7 +14,8 @@ class ClassAdapter  (private val clickListener: (ClassDetails) -> Unit) :
 
     class VH(val binding: com.example.attendit.databinding.ClassItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(s: ClassDetails, clickListener: (ClassDetails) -> Unit) {
-            binding.text.setText(s.className+"\n"+s.subject)  
+            binding.text.setText(s.className+"\n"+s.subject)
+            binding.count.setText("${s.student_list.size}")
             
             binding.root.setOnClickListener {
                 clickListener(s)
