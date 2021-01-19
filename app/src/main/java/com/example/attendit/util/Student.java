@@ -5,10 +5,19 @@ public class Student {
     private String name;
     private int attended;
 
-    public Student(String name, int sno) {
-        this.name = name;
-        this.sno = sno;
+    public Student(String n, int s) {
+        this.name = n;
+        this.sno = (s);
         this.attended=0;
+    }
+    public Student(String name,int sno,int attended)
+    {
+        this.name=name;
+        this.sno=sno;
+        this.attended=attended;
+    }
+    public void incrementAttended(){
+        this.attended+=1;
     }
 
 

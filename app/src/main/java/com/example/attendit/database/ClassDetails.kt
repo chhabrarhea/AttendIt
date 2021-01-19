@@ -11,13 +11,14 @@ import com.example.attendit.util.Student
 data class ClassDetails (
     @ColumnInfo(name = "class_id")
     @PrimaryKey(autoGenerate = true)
-    var class_id: Int,
+    var class_id: Long,
     @ColumnInfo(name = "class_name")
     var className: String,
     @ColumnInfo(name = "class_subject")
     var subject:String,
-    @ColumnInfo(name="listOfStudents")
+
     @TypeConverters(StudentConvertor::class)
+    @ColumnInfo(name="student_list")
     var student_list:ArrayList<Student>,
     @ColumnInfo(name = "classes_taken")
     var classesTaken: Int

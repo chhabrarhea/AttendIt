@@ -1,60 +1,102 @@
 package com.example.attendit.activities
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.applandeo.materialcalendarview.EventDay
+import android.content.Intent
+import android.util.Log
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.example.attendit.R
+import com.example.attendit.database.Attendance
+import com.example.attendit.database.Database
+import com.example.attendit.database.Repository
+import com.example.attendit.databinding.FragmentCalendarBinding
+import com.example.attendit.util.ClassViewModelFactory
+import com.example.attendit.viewmodels.FragmentViewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM1 = "class_id"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CalendarFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CalendarFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+class CalendarFragment : Fragment(),OnDayClickListener {
+
+    private var classId: Long = -1
+    lateinit var events:ArrayList<EventDay>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            classId = it.getLong(ARG_PARAM1)
+
         }
+
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar, container, false)
+        val binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = this
+        val attendance_dao = Database.getInstance(activity!!.application).ad
+        val class_dao = Database.getInstance(activity!!.application).cd
+        val repository = Repository(attendance_dao, class_dao)
+        val factory = ClassViewModelFactory(repository, classId)
+        val viewModel = ViewModelProvider(this, factory).get(FragmentViewModel::class.java)
+        events = ArrayList<EventDay>()
+
+        viewModel.events.observe(viewLifecycleOwner, {
+            Log.i("calendar", "${it.toString()}")
+            for (i in it) {
+                val calendar = Calendar.getInstance()
+                calendar.time = i
+                events.add(EventDay(calendar, R.drawable.ic_baseline_check_24))
+            }
+            binding.calendar.setEvents(events)
+            binding.calendar.setOnDayClickListener(this)
+        }
+        )
+        
+
+
+        binding.fab.setOnClickListener(View.OnClickListener {
+            val intent = Intent(activity, TakeAttendanceActivity::class.java)
+
+            intent.putExtra("class_id", classId)
+            Log.i("sd", "$classId")
+            startActivity(intent)
+        })
+
+        return binding.root
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CalendarFragment.
-         */
+
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: Long) =
             CalendarFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putLong(ARG_PARAM1, param1)
+
                 }
             }
+    }
+
+    override fun onDayClick(eventDay: EventDay) {
+       if (events.contains(eventDay))
+       {
+           val intent=Intent(activity,DisplayAttendanceActivity::class.java)
+           intent.putExtra("class_id",classId)
+           intent.putExtra("date",eventDay.calendar)
+           startActivity(intent)
+       }
     }
 }

@@ -12,13 +12,19 @@ import com.google.android.material.appbar.AppBarLayout
 class ClassDetailActivity : AppCompatActivity() {
     lateinit var binding:ActivityClassDetailBinding
     lateinit var pagerAdapter: SectionPagerAdapter
+    lateinit var className: String
+    lateinit var classSubject: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=DataBindingUtil.setContentView(this,R.layout.activity_class_detail)
-         pagerAdapter = SectionPagerAdapter(
-            supportFragmentManager
-
-        )
+        className= intent.getStringExtra("class_name").toString()
+        classSubject= intent.getStringExtra("class_subject").toString()
+        val classId= intent.getLongExtra("class_id",-1)
+        binding.toolbar.setTitle("$className - $classSubject")
+        binding.toolbar.titleMarginTop=110
+        binding.toolbar.setTitleTextAppearance(this,R.style.textAppearance)
+         pagerAdapter = SectionPagerAdapter(supportFragmentManager,classId)
         binding.pager.setAdapter(pagerAdapter)
         binding.slidingTabs.setupWithViewPager(binding.pager)
     }

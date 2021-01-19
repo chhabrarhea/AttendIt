@@ -21,7 +21,7 @@ data class Attendance(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
     @ColumnInfo(name = "class_id",index = true)
-    var class_id: Int,
+    var class_id: Long,
     @TypeConverters(StudentConvertor::class)
     @ColumnInfo(name = "present")
     var present: ArrayList<Student>,

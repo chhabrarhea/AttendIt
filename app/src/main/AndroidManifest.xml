@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AttendIt">
-        <activity android:name=".activities.ClassDetailActivity"></activity>
-
+        <activity android:name=".activities.DisplayAttendanceActivity"></activity>
+        <activity android:name=".activities.TakeAttendanceActivity" />
+        <activity android:name=".activities.ClassDetailActivity" />
         <activity android:name=".activities.ClassListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

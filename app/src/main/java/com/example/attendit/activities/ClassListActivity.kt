@@ -28,7 +28,7 @@ class ClassListActivity : AppCompatActivity() {
         val attendance_dao= Database.getInstance(application).ad
         val class_dao= Database.getInstance(application).cd
         val repository= Repository(attendance_dao, class_dao)
-        val factory = ClassViewModelFactory(repository)
+        val factory = ClassViewModelFactory(repository,-1)
         viewModel = ViewModelProvider(this, factory).get(ClassListViewModel::class.java)
         binding.lifecycleOwner = this
 
@@ -57,6 +57,8 @@ class ClassListActivity : AppCompatActivity() {
     {
        val intent=Intent(this, ClassDetailActivity::class.java)
         intent.putExtra("class_id", sub.class_id)
+        intent.putExtra("class_name", sub.className)
+        intent.putExtra("class_subject", sub.subject)
         startActivity(intent)
     }
 

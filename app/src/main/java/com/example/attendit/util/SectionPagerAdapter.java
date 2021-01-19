@@ -12,10 +12,10 @@ import com.example.attendit.activities.StudentFragment;
 public class SectionPagerAdapter extends FragmentPagerAdapter {
 
 
-    private int classID;
+    private long classID;
 
 
- public SectionPagerAdapter(FragmentManager fm,final int id)
+ public SectionPagerAdapter(FragmentManager fm,final long id)
  {
      super(fm);
      this.classID=id;
@@ -33,7 +33,7 @@ public class SectionPagerAdapter extends FragmentPagerAdapter {
                 fragment = StudentFragment.newInstance(classID);
                 break;
             case 1:
-                fragment =  new CalendarFragment();
+                fragment =  CalendarFragment.newInstance(classID);
                 break;
 
         }

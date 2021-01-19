@@ -10,7 +10,7 @@
     tools:context=".activities.ClassDetailActivity">
 <androidx.appcompat.widget.Toolbar
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="80dp"
     app:titleTextColor="@color/white"
     app:titleTextAppearance="@style/textAppearance"
     android:id="@+id/toolbar"

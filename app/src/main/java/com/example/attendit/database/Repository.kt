@@ -2,6 +2,7 @@ package com.example.attendit.database
 
 import androidx.lifecycle.LiveData
 import com.example.attendit.util.Student
+import com.example.attendit.util.StudentConvertor
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -9,10 +10,7 @@ class Repository(private val attendanceDao: attendance_dao,private val classesDa
 
     val classes=classesDao.getAll()
 
-    fun getStudents(id: Int): LiveData<ArrayList<Student>> {
-        return classesDao.getStudents(id)
-    }
-     fun getAttendances(id:Int): LiveData<List<Date>>
+     fun getAttendances(id:Long): LiveData<List<Date>>
     {
         return attendanceDao.getAttendances(id)
     }
@@ -48,9 +46,22 @@ class Repository(private val attendanceDao: attendance_dao,private val classesDa
     {
         attendanceDao.deleteAllAttendance(id)
     }
-    suspend fun incrementClasses(id:Int)
+    suspend fun incrementClasses(id:Long)
     {
         classesDao.incrementClassesTaken(id)
     }
+    suspend fun getTotal(id:Long):Int
+    {
+        return classesDao.getTotal(id)
+    }
+     suspend fun getStudents(id: Long):String
+      {
+          return classesDao.getStudents(id)
+      }
+    suspend fun setStudents(students: List<Student>,id: Long){
+        classesDao.setStudents(StudentConvertor.ObjectListToString(students),id)
+    }
+
+
 
 }
