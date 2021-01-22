@@ -9,6 +9,8 @@ import com.example.attendit.database.Repository
 import com.example.attendit.util.Student
 import com.example.attendit.util.StudentConvertor
 import kotlinx.coroutines.launch
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -33,13 +35,15 @@ class TakeAttendanceViewModel(private val repository: Repository, private val id
         students1.addAll(students)
     }
      fun setAttendance()=viewModelScope.launch {
-         val attendance=Attendance(0,id,present,absent,Calendar.getInstance().time)
+         val df: DateFormat = SimpleDateFormat("MM/dd/yyyy")
+         val date:Date=Calendar.getInstance().time
+         val relativeDate=df.format(date)
          present.forEach {
             val pos= students.indexOf(it)
-             Log.i("Students","foreach ${it.name} $pos ")
              it.incrementAttended()
              students.removeAt(pos)
-             students.add(pos,it) }
+             students.add(pos,it)}
+         val attendance=Attendance(0,id,present,absent,Calendar.getInstance().time,relativeDate)
          repository.setStudents(students,id)
          repository.addAttendance(attendance)
          repository.incrementClasses(id)
@@ -47,7 +51,6 @@ class TakeAttendanceViewModel(private val repository: Repository, private val id
     fun markPresent (pos:Int){
         present.add(students1.get(pos))
         students1.removeAt(pos)
-        Log.i("Students","mark present ${students.get(pos).name}")
     }
     fun markAbsent (pos:Int){
         absent.add(students1.get(pos))

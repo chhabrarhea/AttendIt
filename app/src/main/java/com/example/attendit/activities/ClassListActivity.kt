@@ -2,6 +2,7 @@ package com.example.attendit.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -48,6 +49,7 @@ class ClassListActivity : AppCompatActivity() {
         binding.recycle.adapter=adapter
         viewModel.classes.observe(this, Observer {
             adapter.setList(it)
+            Log.i("cal","${it.toString()}")
             adapter.notifyDataSetChanged()
         })
 

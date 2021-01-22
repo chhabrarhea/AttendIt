@@ -1,22 +1,24 @@
 package com.example.attendit.activities
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.applandeo.materialcalendarview.EventDay
-import android.content.Intent
-import android.util.Log
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.example.attendit.R
-import com.example.attendit.database.Attendance
 import com.example.attendit.database.Database
 import com.example.attendit.database.Repository
 import com.example.attendit.databinding.FragmentCalendarBinding
 import com.example.attendit.util.ClassViewModelFactory
 import com.example.attendit.viewmodels.FragmentViewModel
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -57,13 +59,13 @@ class CalendarFragment : Fragment(),OnDayClickListener {
             for (i in it) {
                 val calendar = Calendar.getInstance()
                 calendar.time = i
-                events.add(EventDay(calendar, R.drawable.ic_baseline_check_24))
+                events.add(EventDay(calendar, R.drawable.ic_baseline_check_24,resources.getColor(R.color.accent)))
             }
             binding.calendar.setEvents(events)
             binding.calendar.setOnDayClickListener(this)
         }
         )
-        
+
 
 
         binding.fab.setOnClickListener(View.OnClickListener {
@@ -93,9 +95,11 @@ class CalendarFragment : Fragment(),OnDayClickListener {
     override fun onDayClick(eventDay: EventDay) {
        if (events.contains(eventDay))
        {
-           val intent=Intent(activity,DisplayAttendanceActivity::class.java)
-           intent.putExtra("class_id",classId)
-           intent.putExtra("date",eventDay.calendar)
+           val df: DateFormat = SimpleDateFormat("MM/dd/yyyy")
+           val relativeDate= df.format(eventDay.calendar.time)
+           val intent=Intent(activity, AttendanceListActivity::class.java)
+           intent.putExtra("class_id", classId)
+           intent.putExtra("date", relativeDate)
            startActivity(intent)
        }
     }

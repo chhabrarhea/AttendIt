@@ -15,12 +15,16 @@ interface attendance_dao {
     suspend fun updateAttendance(attendance: Attendance)
     @Delete
     suspend fun deleteAttendance(attendance: Attendance)
-    @Query("Select date from Attendance where class_id=:id")
+    @Query("Select absoluteDate from Attendance where class_id=:id")
     fun getAttendances(id:Long): LiveData<List<Date>>
-    @Query("Select * from Attendance where class_id=:id and date=:date")
-    suspend fun getAttendance(id:Int,date: Date):List<Attendance>
+    @Query("Select * from Attendance where class_id=:id and absoluteDate=:date")
+    suspend fun getAttendance(id:Long,date: Date):List<Attendance>
     @Query("Delete from Attendance where class_id=:id")
     suspend fun deleteAllAttendance(id: Int)
+    @Query("Select * from Attendance where class_id=:id and relativeDate=:rdate")
+    suspend fun getAttendancesOfDay(id: Long,rdate: String):List<Attendance>
+
+
 
 
 }

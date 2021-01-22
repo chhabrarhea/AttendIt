@@ -62,6 +62,14 @@ class Repository(private val attendanceDao: attendance_dao,private val classesDa
         classesDao.setStudents(StudentConvertor.ObjectListToString(students),id)
     }
 
+    suspend fun getAttendance(id:Long,date: Date):Attendance{
+        return attendanceDao.getAttendance(id,date).get(0)
+    }
+
+    suspend fun getAttendancesOfDay(id: Long,date:String):List<Attendance>{
+        return attendanceDao.getAttendancesOfDay(id,date)
+    }
+
 
 
 }

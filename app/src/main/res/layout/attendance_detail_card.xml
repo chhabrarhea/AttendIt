@@ -6,12 +6,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         app:cardUseCompatPadding="true"
+        android:id="@+id/card"
         app:cardCornerRadius="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/list_item"
             android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="30dp">
 
@@ -23,9 +23,15 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:id="@+id/name"
-                android:text="Rhea Chhabra"
-                android:textColor="@color/design_default_color_on_secondary"/>
-
+                android:text="1. Rhea Chhabra"
+                android:textColor="@color/white"/>
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_baseline_close_24"
+    android:layout_alignParentRight="true"
+    android:layout_centerVertical="true"
+    android:id="@+id/icon"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </layout>

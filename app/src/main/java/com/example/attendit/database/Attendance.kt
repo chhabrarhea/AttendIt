@@ -1,5 +1,6 @@
 package com.example.attendit.database
 
+import android.os.Parcelable
 import androidx.room.*
 import com.example.attendit.util.DateConvertor
 import com.example.attendit.util.StudentConvertor
@@ -28,8 +29,9 @@ data class Attendance(
     @ColumnInfo(name = "absent")
     @TypeConverters(StudentConvertor::class)
     var absent: ArrayList<Student>,
-    @ColumnInfo(name="date")
+    @ColumnInfo(name="absoluteDate")
     @TypeConverters(DateConvertor::class)
-     var date:Date
-
-)
+     var date:Date,
+    @ColumnInfo(name = "relativeDate")
+     var relativeDate:String
+     )
